@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Toaster, toast } from "react-hot-toast";
 
 export function FavMovies() {
   const navigate = useNavigate();
@@ -35,15 +36,18 @@ export function FavMovies() {
   }
 
   function handleClick(e) {
+    console.log(handleClick);
     e.preventDefault();
+
+    setForm({ ...form, movies: mov });
+    toast.success("Seu filme foi adicionado à sua coleção.");
     // console.log(e);
   }
 
-  //
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      await axios.post("https://ironrest.herokuapp.com/react-fitness", form);
+      await axios.post("https://ironrest.herokuapp.com/fav-movies", form);
 
       navigate("/");
     } catch (err) {
@@ -53,6 +57,7 @@ export function FavMovies() {
 
   return (
     <>
+      <Toaster />
       <form onSubmit={handleSubmit}>
         <label htmlFor="owner-input">Seu nome:</label>
         <input
@@ -70,10 +75,8 @@ export function FavMovies() {
           name="description"
           onChange={handleChange}
         />
-
         <h2>Escolha os Filmes que você quer assistir:</h2>
         <label>Filmes:</label>
-
         <select name="select">
           {mov.map((currentElement) => {
             return (
@@ -88,10 +91,12 @@ export function FavMovies() {
             );
           })}
         </select>
+        <button type="button" onClick={handleClick}>
+          Adicionar Filme
+        </button>
 
-        <button onClick={handleClick}>Adicionar Filme</button>
         <button onClick={handleSubmit} type="submit">
-          Enviar
+          Enviar Coleção
         </button>
       </form>
     </>
