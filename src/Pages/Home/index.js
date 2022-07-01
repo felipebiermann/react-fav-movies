@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 export function Home() {
   const [movComunnity, setMovComunnity] = useState([]);
+  console.log(movComunnity);
 
   useEffect(() => {
     async function fetchMovies() {

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 
-export function FavMovies() {
+export function EditPage() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
     owner: "",
@@ -11,10 +11,29 @@ export function FavMovies() {
     movies: [],
   });
 
+  const { id } = useParams();
+
   const [mov, setMov] = useState([]);
 
   const [selectMov, setSelectMov] = useState([]);
   console.log(selectMov);
+
+  useEffect(() => {
+    async function fetchEditMovie() {
+      try {
+        const response = await axios.get(
+          `https://ironrest.herokuapp.com/fav-movies/${id}`
+        );
+
+        setForm(...response.data);
+
+        setMov({ ...response.data.movies });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchEditMovie();
+  }, [id]);
 
   useEffect(() => {
     async function fetchMovies() {
@@ -50,19 +69,22 @@ export function FavMovies() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      await axios.post("https://ironrest.herokuapp.com/fav-movies", form);
+      const clone = { ...form };
+      delete clone.id;
+      await axios.put(`https://ironrest.herokuapp.com/fav-movies${id}`, clone);
 
       navigate("/");
     } catch (err) {
       console.log(err);
     }
   }
+  console.log(handleSubmit);
 
   return (
     <>
       <Toaster />
       <form onSubmit={handleSubmit}>
-        <label htmlFor="owner-input">Seu nome:</label>
+        <label htmlFor="owner-input">Edite sua coleção:</label>
         <input
           id="owner-input"
           value={form.owner}
@@ -78,7 +100,7 @@ export function FavMovies() {
           name="description"
           onChange={handleChange}
         />
-        <h2>Escolha os Filmes que você quer assistir:</h2>
+        <h2>Edite a sua coleção:</h2>
         <label>Filmes:</label>
         <select
           value={selectMov}
@@ -97,7 +119,7 @@ export function FavMovies() {
         </button>
 
         <button onClick={handleSubmit} type="submit">
-          Enviar Coleção
+          Editar
         </button>
       </form>
     </>
