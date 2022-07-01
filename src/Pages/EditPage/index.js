@@ -70,8 +70,8 @@ export function EditPage() {
     e.preventDefault();
     try {
       const clone = { ...form };
-      delete clone.id;
-      await axios.put(`https://ironrest.herokuapp.com/fav-movies${id}`, clone);
+      delete clone._id;
+      await axios.put(`https://ironrest.herokuapp.com/fav-movies/${id}`, clone);
 
       navigate("/");
     } catch (err) {
@@ -82,46 +82,93 @@ export function EditPage() {
 
   return (
     <>
-      <Toaster />
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="owner-input">Edite sua coleção:</label>
-        <input
-          id="owner-input"
-          value={form.owner}
-          type="string"
-          name="owner"
-          onChange={handleChange}
-        />
-        <label htmlFor="description-input">Descrição:</label>
-        <input
-          id="description-input"
-          value={form.description}
-          type="string"
-          name="description"
-          onChange={handleChange}
-        />
-        <h2>Edite a sua coleção:</h2>
-        <label>Filmes:</label>
-        <select
-          value={selectMov}
-          onChange={(e) => setSelectMov(e.target.value)}
-        >
-          {mov.map((currentElement) => {
-            return (
-              <option value={currentElement.original_title}>
-                {currentElement.original_title}
-              </option>
-            );
-          })}
-        </select>
-        <button type="button" onClick={handleClick}>
-          Adicionar Filme
-        </button>
+      <div className="container">
+        <Toaster />
+        <form onSubmit={handleSubmit}>
+          <label
+            style={{
+              width: "100px",
+              height: "50px",
+              margin: "0 auto",
+              textAlign: "center",
+            }}
+            htmlFor="owner-input"
+          >
+            Edite sua coleção:
+          </label>
+          <input
+            id="owner-input"
+            value={form.owner}
+            type="string"
+            name="owner"
+            onChange={handleChange}
+          />
+          <label
+            style={{
+              width: "100px",
+              height: "100px",
+              textAlign: "center",
+              marginTop: "01px",
+            }}
+            htmlFor="description-input"
+          >
+            Descrição:
+          </label>
+          <input
+            id="description-input"
+            value={form.description}
+            type="string"
+            name="description"
+            onChange={handleChange}
+          />
+          <h2>Edite a sua coleção:</h2>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label
+                style={{
+                  width: "100px",
+                  height: "10px",
+                  margin: "0 auto",
+                  textAlign: "center",
+                }}
+              >
+                Filmes:
+              </label>
+            </div>
+            <select
+              className="custom-select"
+              id="inputGroupSelect01"
+              value={selectMov}
+              onChange={(e) => setSelectMov(e.target.value)}
+            >
+              {mov.map((currentElement) => {
+                return (
+                  <option value={currentElement.original_title}>
+                    {currentElement.original_title}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          <button
+            className="btn btn-success d-flex flex-column"
+            type="button"
+            onClick={handleClick}
+            style={{ margin: "10px" }}
+          >
+            Adicionar Filme
+          </button>
 
-        <button onClick={handleSubmit} type="submit">
-          Editar
-        </button>
-      </form>
+          <button
+            className="btn btn-warning d-flex flex-column"
+            onClick={handleSubmit}
+            type="submit"
+            style={{ margin: "10px" }}
+          >
+            Editar
+          </button>
+        </form>
+      </div>
     </>
   );
 }

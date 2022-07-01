@@ -60,46 +60,95 @@ export function FavMovies() {
 
   return (
     <>
-      <Toaster />
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="owner-input">Seu nome:</label>
-        <input
-          id="owner-input"
-          value={form.owner}
-          type="string"
-          name="owner"
-          onChange={handleChange}
-        />
-        <label htmlFor="description-input">Descrição:</label>
-        <input
-          id="description-input"
-          value={form.description}
-          type="string"
-          name="description"
-          onChange={handleChange}
-        />
-        <h2>Escolha os Filmes que você quer assistir:</h2>
-        <label>Filmes:</label>
-        <select
-          value={selectMov}
-          onChange={(e) => setSelectMov(e.target.value)}
-        >
-          {mov.map((currentElement) => {
-            return (
-              <option value={currentElement.original_title}>
-                {currentElement.original_title}
-              </option>
-            );
-          })}
-        </select>
-        <button type="button" onClick={handleClick}>
-          Adicionar Filme
-        </button>
+      <div className="container">
+        <Toaster />
+        <form onSubmit={handleSubmit}>
+          <label
+            style={{
+              width: "100px",
+              height: "50px",
+              margin: "0 auto",
+              textAlign: "center",
+            }}
+            htmlFor="owner-input"
+          >
+            Seu nome:
+          </label>
+          <input
+            id="owner-input"
+            value={form.owner}
+            type="string"
+            name="owner"
+            onChange={handleChange}
+          />
+          <br />
+          <label
+            style={{
+              width: "100px",
+              height: "100px",
+              textAlign: "center",
+              marginTop: "01px",
+            }}
+            htmlFor="description-input"
+          >
+            Descrição:
+          </label>
+          <input
+            id="description-input"
+            value={form.description}
+            type="string"
+            name="description"
+            onChange={handleChange}
+          />
+          <h2>Escolha os Filmes que você quer assistir:</h2>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label
+                style={{
+                  width: "100px",
+                  height: "10px",
+                  margin: "0 auto",
+                  textAlign: "center",
+                }}
+              >
+                Filmes:
+              </label>
+            </div>
 
-        <button onClick={handleSubmit} type="submit">
-          Enviar Coleção
-        </button>
-      </form>
+            <select
+              className="custom-select"
+              id="inputGroupSelect01"
+              value={selectMov}
+              onChange={(e) => setSelectMov(e.target.value)}
+            >
+              {mov.map((currentElement) => {
+                return (
+                  <option value={currentElement.original_title}>
+                    {currentElement.original_title}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          <button
+            className="btn btn-success d-flex flex-column"
+            type="button"
+            onClick={handleClick}
+            style={{ margin: "10px" }}
+          >
+            Adicionar Filme
+          </button>
+
+          <button
+            className="btn btn-primary d-flex flex-column"
+            onClick={handleSubmit}
+            type="submit"
+            style={{ margin: "10px" }}
+          >
+            Enviar Coleção
+          </button>
+        </form>
+      </div>
     </>
   );
 }

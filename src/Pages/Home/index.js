@@ -19,20 +19,40 @@ export function Home() {
 
   return (
     <>
-      <h1 style={{ margin: "15px" }}>Meus filmes favoritos</h1>
-      <Link to="/fav-movies">
-        <button style={{ cursor: "pointer", marginLeft: "80px" }}>
-          Criar minha coleção
-        </button>
-      </Link>
+      <div className="container" style={{ textAlign: "center" }}>
+        <h1
+          style={{
+            margin: "15px",
+            fontFamily: "Blippo, fantasy",
+            backgroundColor: "black",
+            color: "white",
+          }}
+        >
+          Meus Filmes Favoritos
+        </h1>
+        <Link to="/fav-movies">
+          <button
+            className="btn btn-success"
+            style={{ cursor: "pointer", marginLeft: "80px", margin: "0 auto" }}
+          >
+            Criar minha coleção
+          </button>
+        </Link>
 
-      <h2 style={{ marginRight: "30px", marginTop: "50px" }}>
-        Filmes da Comunidade:
-      </h2>
+        <h2 style={{ marginRight: "02px", marginTop: "60px" }}>
+          Filmes da Galera:
+        </h2>
 
-      {movComunnity.map((currentMovie) => {
-        return <Cards owner={currentMovie.owner} id={currentMovie._id} />;
-      })}
+        {movComunnity.map((currentMovie) => {
+          return (
+            <Cards
+              style={{ margin: "0 auto" }}
+              owner={currentMovie.owner}
+              id={currentMovie._id}
+            />
+          );
+        })}
+      </div>
     </>
   );
 }
